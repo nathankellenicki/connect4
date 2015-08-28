@@ -1,0 +1,1 @@
+g++ main.cpp src/C4CmdLine.cpp src/Connect4.cpp -I include/ -o connect4
