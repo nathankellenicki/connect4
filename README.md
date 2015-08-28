@@ -1,6 +1,6 @@
 # Connect4
 
-A very simple implementation of Connect4, built purely as a test bed.
+A very simple implementation of Connect4 in C++, built purely as a test bed.
 
 ## Local Development
 
