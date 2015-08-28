@@ -46,7 +46,7 @@ bool Connect4::isGameOver () {
 int Connect4::getWinner () {
 
     if (!this->isGameOver()) {
-        return 0; // Game isn't over yet
+        return 0; // Game isn't over yet (TODO: Throw)
     }
 
     return this->currentPlayer;
@@ -58,25 +58,25 @@ void Connect4::makePlay (int player, int col) {
     col--;
 
     if (this->isGameOver()) {
-        return; // Game is over
+        return; // Game is over (TODO: Throw)
     }
 
     if (player > this->numPlayers) {
-        return; // Invalid player;
+        return; // Invalid player (TODO: Throw)
     }
 
     if (player != this->getCurrentPlayer()) {
-        return; // Not current player
+        return; // Not current player (TODO: Throw)
     }
 
     if (col > 6) {
-        return; // Invalid column (Only 7 in total)
+        return; // Invalid column (TODO: Throw)
     }
 
     int *row = &this->rowCounter[col];
 
     if (*row >= 6) {
-        return; // Already reached the top, can't go for this column
+        return; // Already reached the top (TODO: Throw)
     }
 
     this->boardState[col][*row] = player;
