@@ -87,10 +87,10 @@ void Connect4::makePlay (int player, int col) {
 
         this->gameOver = true;
         return;
+
     }
 
     (*row)++;
-
     this->currentPlayer++;
 
     if (this->currentPlayer > numPlayers) {
@@ -114,9 +114,7 @@ bool Connect4::checkDirection (int player, int col, int row, int colIncr, int ro
     for (int i = 0; i < 4; i++) {
 
         if (this->boardState[colPos][rowPos] != player) {
-
             return false;
-
         } else {
 
             colPos = colPos + colIncr;
