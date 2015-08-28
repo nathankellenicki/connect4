@@ -4,7 +4,8 @@ CC := g++
 
 SRCDIR := src
 BUILDDIR := build
-TARGET := bin/connect4
+TARGETDIR := bin
+TARGET := connect4
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -name '*.$(SRCEXT)')
@@ -14,9 +15,10 @@ CFLAGS := -g
 LIB := -pthread -L lib
 INC := -I include
 
-$(TARGET): $(OBJECTS)
+$(TARGETDIR)/$(TARGET): $(OBJECTS)
+	@mkdir -p $(TARGETDIR)
 	@echo "Linking..."
-	$(CC) main.cpp $^ -o $(TARGET) $(INC) $(LIB)
+	$(CC) main.cpp $^ -o $(TARGETDIR)/$(TARGET) $(INC) $(LIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
@@ -25,4 +27,4 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 
 clean:
 	@echo "Cleaning...";
-	$(RM) -r $(BUILDDIR) $(TARGET)
+	$(RM) -r $(BUILDDIR) $(TARGETDIR)
