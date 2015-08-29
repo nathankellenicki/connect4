@@ -33,9 +33,7 @@ void C4CmdLine::printGameState (Connect4 *game) {
             std::string boardChar;
 
             if (player == 0) {
-
                 boardChar = " ";
-
             } else {
 
                 std::stringstream ss;
