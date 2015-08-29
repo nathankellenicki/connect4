@@ -23,7 +23,7 @@ int main (int argc, char *argv[]) {
 
         int currentPlayer = game.getCurrentPlayer();
 
-        printf("Player %d, what's your move? (Enter a column number between 1 and 7)\n", currentPlayer);
+        printf("Player %d, what's your move? (Enter a column between 1 and 7)\n", currentPlayer);
         std::string input = C4CmdLine::getInputText();
 
         if (input.compare("quit") == 0) {
