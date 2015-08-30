@@ -2,23 +2,30 @@
 
 CC := g++
 
-SRCDIR := src
+SRCDIR := app/src
 BUILDDIR := build
 TARGETDIR := bin
-TARGET := connect4
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -name '*.$(SRCEXT)')
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
-CFLAGS := -g
-LIB := -pthread -L lib
-INC := -I include
+CFLAGS := -g -pthread
+LIBPATHS := -Llib/libuv/build/Release
+LIB := -luv
+INC := -Iinclude -Ilib/libuv/include
 
-$(TARGETDIR)/$(TARGET): $(OBJECTS)
+all: connect4 connect4_server
+
+connect4: $(OBJECTS)
 	@mkdir -p $(TARGETDIR)
 	@echo "Linking..."
-	$(CC) main.cpp $^ -o $(TARGETDIR)/$(TARGET) $(INC) $(LIB)
+	$(CC) app/connect4.cpp $^ -o $(TARGETDIR)/connect4 $(INC) $(LIBPATHS) $(LIB)
+
+connect4_server: $(OBJECTS)
+	@mkdir -p $(TARGETDIR)
+	@echo "Linking..."
+	$(CC) app/connect4_server.cpp $^ -o $(TARGETDIR)/connect4_server $(INC) $(LIBPATHS) $(LIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
