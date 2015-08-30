@@ -17,22 +17,37 @@ static uv_loop_t *uv_loop;
 static uv_tcp_t server;
 
 
+struct client_t {
+  uv_tcp_t handle;
+  Connect4 game;
+  int request_num;
+};
+
+
 void alloc_cb (uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
     *buf = uv_buf_init((char *) malloc(suggested_size), suggested_size);
 }
 
 
 void on_close (uv_handle_t *handle) {
+
+  client_t *client = (client_t *) handle->data;
+
   printf("Connection closed\n");
+
+  delete client;
+
 }
 
 
 void on_read (uv_stream_t *tcp, ssize_t nread, const uv_buf_t *buf) {
 
+    client_t *client = (client_t *) tcp->data;
+
     if (nread > 0) {
         printf("Reading - %s", buf->base);
     } else {
-        uv_close((uv_handle_t *) tcp, on_close);
+        uv_close((uv_handle_t *) &client->handle, on_close);
     }
 
     free(buf->base);
@@ -44,14 +59,16 @@ void on_connect (uv_stream_t *server_handle, int status) {
 
     assert((uv_tcp_t *) server_handle == &server);
 
-    uv_tcp_t *client = new uv_tcp_t();
+    client_t *client = new client_t();
 
-    uv_tcp_init(uv_loop, client);
+    uv_tcp_init(uv_loop, &client->handle);
 
-    int r = uv_accept(server_handle, (uv_stream_t *) client);
+    client->handle.data = client;
+
+    int r = uv_accept(server_handle, (uv_stream_t *) &client->handle);
     printf("New connection\n");
 
-    uv_read_start((uv_stream_t *) client, alloc_cb, on_read);
+    uv_read_start((uv_stream_t *) &client->handle, alloc_cb, on_read);
 
 }
 
