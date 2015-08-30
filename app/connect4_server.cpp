@@ -22,9 +22,20 @@ void alloc_cb (uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
 }
 
 
+void on_close (uv_handle_t *handle) {
+  printf("Connection closed\n");
+}
+
+
 void on_read (uv_stream_t *tcp, ssize_t nread, const uv_buf_t *buf) {
 
-    printf("Reading - %s", buf->base);
+    if (nread > 0) {
+        printf("Reading - %s", buf->base);
+    } else {
+        uv_close((uv_handle_t *) tcp, on_close);
+    }
+
+    free(buf->base);
 
 }
 
