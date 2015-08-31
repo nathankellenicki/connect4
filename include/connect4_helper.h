@@ -2,13 +2,13 @@
 
 #ifndef CONNECT_4
 #define CONNECT_4
-#include "Connect4.h"
+#include "connect4.h"
 #endif
 
-class C4CmdLine {
+class connect4_helper {
 
 public:
     static std::string getInputText ();
-    static void printGameState (Connect4 *game);
+    static std::string printGameState (connect4 *game);
 
 };

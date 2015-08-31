@@ -6,11 +6,13 @@
 
 #ifndef CONNECT_4
 #define CONNECT_4
-#include "Connect4.h"
+#include "connect4.h"
 #endif
 
+#include "connect4_helper.h"
 
-#define MAX_WRITE_HANDLES 1000
+
+#define MAX_WRITE_HANDLES 1024
 #define LISTEN_PORT 10060
 
 static uv_loop_t *uv_loop;
@@ -19,7 +21,7 @@ static uv_tcp_t server;
 
 struct client_t {
   uv_tcp_t handle;
-  Connect4 game;
+  connect4 game;
   int request_num;
 };
 
@@ -45,13 +47,30 @@ void on_read (uv_stream_t *tcp, ssize_t nread, const uv_buf_t *buf) {
     client_t *client = (client_t *) tcp->data;
 
     if (nread > 0) {
+
         printf("Reading - %s", buf->base);
+
+        // Echoing back
+        std::string res = "Received loud and clear\n";
+
+        uv_buf_t resbuf;
+        resbuf.base = (char *) res.c_str();
+        resbuf.len = res.size();
+
+        uv_write_t *writereq = new uv_write_t();
+        uv_write(writereq, (uv_stream_t *) &client->handle, &resbuf, 1, NULL);
+
     } else {
         uv_close((uv_handle_t *) &client->handle, on_close);
     }
 
     free(buf->base);
 
+}
+
+
+void on_write (uv_write_t *req, int status) {
+    delete req;
 }
 
 
@@ -74,8 +93,6 @@ void on_connect (uv_stream_t *server_handle, int status) {
 
 
 int main (int argc, char *argv[]) {
-
-    printf("Test\n");
 
     uv_loop = uv_default_loop();
 

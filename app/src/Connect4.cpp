@@ -1,12 +1,12 @@
 #ifndef CONNECT_4
 #define CONNECT_4
-#include "Connect4.h"
+#include "connect4.h"
 #endif
 
 #include <algorithm>
 
 
-Connect4::Connect4 (int numPlayers) {
+connect4::connect4 (int numPlayers) {
 
     this->numPlayers = numPlayers;
     this->reset();
@@ -14,7 +14,7 @@ Connect4::Connect4 (int numPlayers) {
 }
 
 
-void Connect4::reset () {
+void connect4::reset () {
 
     this->currentPlayer = 1;
     this->gameOver = false;
@@ -28,22 +28,22 @@ void Connect4::reset () {
 }
 
 
-int Connect4::getStateAtPosition (int col, int row) {
+int connect4::getStateAtPosition (int col, int row) {
     return this->boardState[col][row];
 }
 
 
-int Connect4::getCurrentPlayer () {
+int connect4::getCurrentPlayer () {
     return this->currentPlayer;
 }
 
 
-bool Connect4::isGameOver () {
+bool connect4::isGameOver () {
     return this->gameOver;
 }
 
 
-int Connect4::getWinner () {
+int connect4::getWinner () {
 
     if (!this->isGameOver()) {
         return 0; // Game isn't over yet (TODO: Throw)
@@ -53,7 +53,7 @@ int Connect4::getWinner () {
 }
 
 
-void Connect4::makePlay (int player, int col) {
+void connect4::makePlay (int player, int col) {
 
     col--;
 
@@ -102,7 +102,7 @@ void Connect4::makePlay (int player, int col) {
 }
 
 
-bool Connect4::checkDirection (int player, int col, int row, int colIncr, int rowIncr) {
+bool connect4::checkDirection (int player, int col, int row, int colIncr, int rowIncr) {
 
     if ((col + (3 * colIncr)) < 0 || (row + (3 * rowIncr)) < 0) { // Check bounds
         return false;
@@ -129,7 +129,7 @@ bool Connect4::checkDirection (int player, int col, int row, int colIncr, int ro
 }
 
 
-bool Connect4::checkForWin (int player, int col, int row) {
+bool connect4::checkForWin (int player, int col, int row) {
 
     for (int colIncr = -1; colIncr <= 1; colIncr++) {
         for (int rowIncr = -1; rowIncr <= 1; rowIncr++) {

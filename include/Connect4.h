@@ -1,6 +1,6 @@
 #include <string>
 
-class Connect4 {
+class connect4 {
 
     private:
         int numPlayers;
@@ -14,7 +14,7 @@ class Connect4 {
         bool checkDirection (int player, int col, int row, int moveCol, int moveRow);
 
     public:
-        Connect4 (int numPlayers = 2);
+        connect4 (int numPlayers = 2);
         void reset ();
         int getStateAtPosition (int col, int row);
         int getCurrentPlayer ();

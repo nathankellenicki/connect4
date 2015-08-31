@@ -3,13 +3,13 @@
 
 #ifndef CONNECT_4
 #define CONNECT_4
-#include "Connect4.h"
+#include "connect4.h"
 #endif
 
-#include "C4CmdLine.h"
+#include "connect4_helper.h"
 
 
-Connect4 game(2);
+connect4 game(2);
 bool wantQuit = false;
 
 
@@ -19,12 +19,13 @@ int main (int argc, char *argv[]) {
 
     while (!wantQuit) {
 
-        C4CmdLine::printGameState(&game);
+        std::string state = connect4_helper::printGameState(&game);
+        printf("%s", state.c_str());
 
         int currentPlayer = game.getCurrentPlayer();
 
         printf("Player %d, what's your move? (Enter a column between 1 and 7)\n", currentPlayer);
-        std::string input = C4CmdLine::getInputText();
+        std::string input = connect4_helper::getInputText();
 
         if (input.compare("quit") == 0) {
             wantQuit = true;
@@ -35,7 +36,8 @@ int main (int argc, char *argv[]) {
 
             if (game.isGameOver()) {
 
-                C4CmdLine::printGameState(&game);
+                std::string state = connect4_helper::printGameState(&game);
+                printf("%s", state.c_str());
 
                 int winner = game.getWinner();
                 printf("Congratulations, player %d wins!\n", winner);

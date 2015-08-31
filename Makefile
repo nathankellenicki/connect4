@@ -15,17 +15,17 @@ LIBPATHS := -Llib/libuv/build/Release
 LIB := -luv
 INC := -Iinclude -Ilib/libuv/include
 
-all: connect4 connect4_server
+all: cli server
 
-connect4: $(OBJECTS)
+cli: $(OBJECTS)
 	@mkdir -p $(TARGETDIR)
 	@echo "Linking..."
-	$(CC) app/connect4.cpp $^ -o $(TARGETDIR)/connect4 $(INC) $(LIBPATHS) $(LIB)
+	$(CC) app/cli.cpp $^ -o $(TARGETDIR)/connect4_cli $(INC) $(LIBPATHS) $(LIB)
 
-connect4_server: $(OBJECTS)
+server: $(OBJECTS)
 	@mkdir -p $(TARGETDIR)
 	@echo "Linking..."
-	$(CC) app/connect4_server.cpp $^ -o $(TARGETDIR)/connect4_server $(INC) $(LIBPATHS) $(LIB)
+	$(CC) app/server.cpp $^ -o $(TARGETDIR)/connect4_server $(INC) $(LIBPATHS) $(LIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
